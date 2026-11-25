@@ -1,0 +1,260 @@
+/* ---------------------------------------------------------------------
+   1. Reglas comunes para todos los tamaños de pantalla
+   --------------------------------------------------------------------- */
+body {
+  /* Eliminamos el margen blanco alrededor de la página */
+  margin: 0;
+  /* Tipografía sin serifas */
+  font-family: "Segoe UI", Roboto, sans-serif;
+  /* Fondo gris claro */
+  background-color: #f6f6f6;
+}
+
+h1,
+h2 {
+  /* Eliminamos el margen blanco alrededor de los headings */
+  margin: 0;
+  /* Tipografía con serifas */
+  font-family: Georgia, serif;
+}
+
+header {
+  background-color: #03122e;
+  padding: 20px;
+  border-bottom: 4px solid #fec60d;
+  color: white;
+}
+
+/* Un espacio dentro de un selector CSS indica que aplicaremos la regla
+a los elementos dentro de otros. Por ejemplo, el título es un elemento `a`
+que está dentro de un `header`. La regla `header a` busca los elementos `a`
+que están dentro de un elemento `header` */
+header a {
+  color: white;
+  text-decoration: none;
+}
+
+nav {
+  background-color: #204a92;
+  color: white;
+  padding: 20px;
+  display: flex;
+}
+
+nav .menu-title {
+  font-family: inherit;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #bfd0ee;
+  margin-top: 16px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+nav ul {
+  margin: 0;
+  padding-left: 8px;
+  list-style: none;
+}
+
+.wip {
+  color: #bfd0ee;
+}
+
+.table-wrapper {
+  background-color: #0176de;
+}
+
+/* Los selectores con ":" se llaman pseudoclases y se pueden
+aplicar a cualquier elemento. En este caso, `hover` y `focus-visible`
+son pseudo clases que se activan cuando el mouse pasa sobre el elemento
+o cuando el elemento tiene el foco (que se cambia con tab en el teclado)
+respectivamente. */
+nav a:hover,
+nav a:focus-visible {
+  background-color: #03122e;
+}
+
+section {
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #e1e5eb;
+  border-radius: 6px;
+}
+
+/* La pseudoclase target se activa cuando la URL apunta al id del elemento */
+section:target {
+  /* Animation puede recibir el nombre de una animación y su duración */
+  animation: highlight-section-bg 1.8s;
+}
+
+/* Keyframes define una animación. El valor `from` indica el estilo inicial. */
+@keyframes highlight-section-bg {
+  from {
+    background-color: #edf5ff;
+    border-color: #0176de;
+  }
+}
+
+#artists-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar .active {
+  font-weight: bold;
+}
+
+.artist-card {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.65rem;
+  padding: 0.65rem;
+  border: 1px solid #e1e5eb;
+  border-radius: 0.4rem;
+  font-weight: 700;
+}
+
+.artist-card:hover {
+  border-color: #0176de;
+}
+
+.artist-card img {
+  width: 48px;
+  height: 48px;
+}
+
+.artist-card .empty {
+  width: 48px;
+  height: 48px;
+  background-color: #5c5c5c;
+}
+
+.artist-card a {
+  text-decoration: none;
+}
+
+table {
+  width: 100%;
+}
+
+th,
+td {
+  padding: 12px;
+  border-bottom: 1px solid #e1e5eb;
+  text-align: left;
+}
+
+thead th {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #5c5c5c;
+  background-color: #f6f6f6;
+}
+
+td img {
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+td a {
+  text-decoration: none;
+}
+
+footer {
+  padding: 12px;
+  border-top: 4px solid #fec60d;
+  color: white;
+  background-color: #204a92;
+  font-size: 12px;
+  text-align: center;
+}
+
+
+/* ---------------------------------------------------------------------
+   2. Reglas para pantallas grandes (>= 768 px de ancho)
+   --------------------------------------------------------------------- */
+@media only screen and (min-width: 768px) {
+  #main-container {
+    display: grid;
+    /* Así como "%" nos indica porcentaje del alto del elemento padre,
+      "vh" nos indica porcentaje del alto la ventana completa. Aquí queremos
+      que la grilla use todo el alto de la ventana*/
+    height: 100vh;
+    /* Mientras que "auto" se ajusta al contenido, "fr" se ajusta al espacio libre.
+      "fr" viene de "fracción" del espacio sobrante. Aquí dice que la primera fila
+      tiene 200px, y la segunda y la tercera usan el espacio sobrante, siendo la
+      tercera un 20% más ancha que la segunda. */
+    grid-template-columns: 200px 1fr 1.2fr;
+    /* Aquí estamos diciendo que la primera y la tercera fila se ajusten a su
+    contenido ("auto"), y la segunda usa el alto que falte para llenar la grilla.*/
+    grid-template-rows: auto 1fr auto;
+  }
+
+  /* Header y footer ocupan las tres columnas. */
+  header,
+  footer {
+    grid-column: 1 / span 3;
+  }
+
+  /* Contenidos de ancho completo dentro de la grilla.
+   Es decir, que usen las dos columnas de ancho a la derecha
+   del menú de navegación. */
+  .full-content {
+      grid-column: 2 / span 2;
+  }
+
+  nav {
+    flex-direction: column;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   3. Reglas para pantallas pequeñas (< 768 px de ancho)
+   --------------------------------------------------------------------- */
+@media only screen and (width < 768px) {
+  /* Al quitar la grilla, los cinco elementos vuelven al flujo normal y se
+     apilan en el mismo orden del HTML. */
+  #main-container {
+    display: grid;
+    /* Una sola columna */
+    grid-template-columns: auto;
+  }
+
+  /* La navegación permanece visible sin salir del flujo. */
+  nav {
+    position: sticky;
+    top: 0;
+    height: 32px;
+  }
+
+  nav .menu-title,
+  .wip {
+    display: none;
+  }
+
+  section {
+    scroll-margin-top: 48px;
+  }
+
+  td .album-cover {
+    display: none;
+  }
+
+  nav {
+    flex-direction: row;
+  }
+
+  nav ul {
+    display: flex;
+    gap: 12px;
+  }
+}
